@@ -159,12 +159,12 @@ EXPOSE 5000
 CMD ["python", "/usr/src/app/app.py"]
 ```
 
-Now that you finally have your `Dockerfile`, you can now build your image. The `docker build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
+Now that you finally have your `Dockerfile`, you can now build your image. The `docker image build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
 
-While running the `docker build` command given below, make sure to replace `<YOUR_USERNAME>`  with your username. This username should be the same on you created when you registered on [Docker hub](https://hub.docker.com). If you haven't done that yet, please go ahead and create an account. The `docker build` command is quite simple - it takes an optional tag name with `-t` and a location of the directory containing the `Dockerfile` - the `.` indicates the current directory:
+While running the `docker image build` command given below, make sure to replace `<YOUR_USERNAME>`  with your username. This username should be the same on you created when you registered on [Docker hub](https://hub.docker.com). If you haven't done that yet, please go ahead and create an account. The `docker image build` command is quite simple - it takes an optional tag name with `-t` and a location of the directory containing the `Dockerfile` - the `.` indicates the current directory:
 
 ```
-$ docker build -t <YOUR_USERNAME>/myfirstapp .
+$ docker image build -t <YOUR_USERNAME>/myfirstapp .
 Sending build context to Docker daemon 9.728 kB
 Step 1 : FROM alpine:latest
  ---> 0d81fc72e790
@@ -230,12 +230,12 @@ Successfully built 2f7357a0805d
 ```
 > Note, the Alpine Linux CDN has been experiencing some trouble recently. If you encounter an error building this image, there's a workaround as outlined in [issue #104](https://github.com/docker/docker-birthday-3/issues/104). This is also reflected currently in the repo for the [Flask app](https://github.com/docker/docker-birthday-3/tree/master/flask-app)
 
-If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. If everything went well, your image should be ready! Run `docker images` and see if your image (`<YOUR_USERNAME>/myfirstapp`) shows.
+If you don't have the `alpine:latest` image, the client will first pull the image and then create your image. Therefore, your output on running the command will look different from mine. If everything went well, your image should be ready! Run `docker image ls` and see if your image (`<YOUR_USERNAME>/myfirstapp`) shows.
 
 The last step in this section is to run the image and see if it actually works.
 
 ```
-$ docker run -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
+$ docker container run -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
@@ -250,8 +250,8 @@ OK, now that you are done with the this container, stop and remove it since you 
 Open another terminal window and execute the following commands:
 
 ```
-$ docker stop myfirstapp
-$ docker rm myfirstapp
+$ docker container stop myfirstapp
+$ docker container rm myfirstapp
 ```
 
 Yay, know you know how to create images from Dockerfiles! Let's take a look at a more complex application orchestration. <a href="3_compose.md">Goto next section.</a>
