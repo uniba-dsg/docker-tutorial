@@ -1,7 +1,7 @@
 <a id="top"></a>
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/logo.png" alt="docker logo">
 Special thanks to [Docker](https://github.com/docker/docker-birthday-3)  and [Prakhar Srivastav](http://prakhar.me) for parts of this tutorial.
- 
+
 <a href="#top" class="top" id="getting-started">Top</a>
 ## Getting Started: FAQs
 
@@ -56,7 +56,7 @@ The *getting started* guide on Docker has detailed instructions for setting up D
 
 Once you are done installing Docker, test your Docker installation by running the following:
 ```
-$ docker run hello-world
+$ docker container run hello-world
 Unable to find image 'hello-world:latest' locally
 latest: Pulling from library/hello-world
 03f4658f8b78: Pull complete

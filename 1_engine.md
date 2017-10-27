@@ -1,18 +1,18 @@
 <a href="Readme.md#table-of-contents" class="top" id="preface">Top</a>
 <a id="alpine"></a>
 ## 1. Playing with Alpine
-Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run a [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on our system and get a taste of the `docker run` command.
+Now that you have everything setup, it's time to get our hands dirty. In this section, you are going to run a [Alpine Linux](http://www.alpinelinux.org/) container (a lightweight linux distribution) on our system and get a taste of the `docker container run` command.
 
 To get started, let's run the following in our terminal:
 ```
-$ docker pull alpine
+$ docker image pull alpine
 ```
 
 > Note: Depending on how you've installed docker on your system, you might see a `permission denied` error after running the above command. If you're on a Mac, [verify your installation](https://docs.docker.com/mac/step_one/). If you're on Linux, you may need to prefix your `docker` commands with `sudo`. Alternatively you can [create a docker group](http://docs.docker.com/engine/installation/ubuntulinux/#create-a-docker-group) to get rid of this issue.
 
-The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker images` command to see a list of all images on your system.
+The `pull` command fetches the alpine **image** from the **Docker registry** and saves it in our system. You can use the `docker image ls` command to see a list of all images on your system.
 ```
-$ docker images
+$ docker image ls
 REPOSITORY              TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
 alpine                 latest              c51f86c28340        4 weeks ago         1.109 MB
 hello-world             latest              690ed74de00f        5 months ago        960 B
@@ -20,10 +20,10 @@ hello-world             latest              690ed74de00f        5 months ago    
 
 <a id="dockerrun"></a>
 ### 1.1 Docker Run
-Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker run` command.
+Great! Let's now run a Docker **container** based on this image. To do that you are going to use the `docker container run` command.
 
 ```
-$ docker run alpine ls -l
+$ docker container run alpine ls -l
 total 48
 drwxr-xr-x    2 root     root          4096 Mar  2 16:20 bin
 drwxr-xr-x    5 root     root           360 Mar 18 09:47 dev
@@ -33,34 +33,34 @@ drwxr-xr-x    5 root     root          4096 Mar  2 16:20 lib
 ......
 ......
 ```
-What happened? Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker run alpine`, you provided a command (`ls -l`), so Docker started the command specified and you saw the listing.
+What happened? Behind the scenes, a lot of stuff happened. When you call `run`, the Docker client finds the image (alpine in this case), creates the container and then runs a command in that container. When you run `docker container run alpine`, you provided a command (`ls -l`), so Docker started the command specified and you saw the listing.
 
 Let's try something more exciting.
 
 ```
-$ docker run alpine echo "hello from alpine"
+$ docker container run alpine echo "hello from alpine"
 hello from alpine
 ```
 OK, that's some actual output. In this case, the Docker client dutifully ran the `echo` command in our alpine container and then exited it. If you've noticed, all of that happened pretty quickly. Imagine booting up a virtual machine, running a command and then killing it. Now you know why they say containers are fast!
 
 Try another command.
 ```
-$ docker run alpine /bin/sh
+$ docker container run alpine /bin/sh
 ```
 
-Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker run -it alpine /bin/sh` which will be discussed later on.
+Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker container run -it alpine /bin/sh` which will be discussed later on.
 
-Ok, now it's time to see the `docker ps` command. The `docker ps` command shows you all containers that are currently running.
+Ok, now it's time to see the `docker container ps` command. The `docker container ps` command shows you all containers that are currently running.
 
 ```
-$ docker ps
+$ docker container ps
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
-Since no containers are running, you see a blank line. Let's try a more useful variant: `docker ps -a`
+Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
 
 ```
-$ docker ps -a
+$ docker container ps -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
 305297d7a235        alpine             "uptime"                  5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
@@ -72,7 +72,7 @@ c317d0a9e3d2        hello-world         "/hello"                 34 seconds ago 
 What you see above is a list of all containers that you ran. Notice that the `STATUS` column shows that these containers exited a few minutes ago. You're probably wondering if there is a way to run more than just one command in a container. Let's try that now:
 
 ```
-$ docker run -it alpine /bin/sh
+$ docker container run -it alpine /bin/sh
 / # ls
 bin      dev      etc      home     lib      linuxrc  media    mnt      proc     root     run      sbin     sys      tmp      usr      var
 / # uptime
@@ -80,14 +80,14 @@ bin      dev      etc      home     lib      linuxrc  media    mnt      proc    
 ```
 Running the `run` command with the `-it` flags attaches us to an interactive tty in the container. Now you can run as many commands in the container as you want. Take some time to run your favorite commands like `ls -l` or `uptime`. Exit the interactive shell via the `exit`command.
 
-That concludes a whirlwind tour of the `docker run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker run`.
+That concludes a whirlwind tour of the `docker container run` command which would most likely be the command you'll use most often. It makes sense to spend some time getting comfortable with it. To find out more about `run`, use `docker container run --help` to see a list of all flags it supports. As you proceed further, we'll see a few more variants of `docker container run`.
 
 <a id="terminology"></a>
 ### 1.2 Terminology
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
-- *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker inspect alpine`. In the demo above, you used the `docker pull` command to download the **alpine** image. When you executed the command `docker run hello-world`, it also did a `docker pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Created using Docker images and run the actual application. You created a container using `docker run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker ps` command.
+- *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
+- *Containers* - Created using Docker images and run the actual application. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. You'll be using this later in this tutorial.
@@ -95,35 +95,35 @@ In the last section, you saw a lot of Docker-specific jargon which might be conf
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 <a id="webapps"></a>
 ## 2. Webapps with Docker
-Great! So you have now looked at `docker run`, played with a docker container and also got a hang of some terminology. Armed with all this knowledge, you are now ready to get to the real-stuff i.e. deploying web applications with Docker.
+Great! So you have now looked at `docker container run`, played with a docker container and also got a hang of some terminology. Armed with all this knowledge, you are now ready to get to the real-stuff i.e. deploying web applications with Docker.
 
 <a id="static-site"></a>
 ### 2.1 Static Sites
 Let's start by taking baby-steps. The first thing we're going to look at is how you can run a dead-simple static website. You're going to pull a docker image from the docker hub, run the container and see how easy it so to set up a webserver.
 
-The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Hub as [`seqvence/static-site`](https://hub.docker.com/r/seqvence/static-site/). You can download and run the image directly in one go using `docker run`.
+The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Hub as [`seqvence/static-site`](https://hub.docker.com/r/seqvence/static-site/). You can download and run the image directly in one go using `docker container run`.
 
 ```
-$ docker run seqvence/static-site
+$ docker container run seqvence/static-site
 ```
 Since the image doesn't exist on your Docker host, the Docker daemon will first fetch the image from the registry and then run the image.
 Okay, now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
 
-In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker run` command. We'll take the oportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
+In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker container run` command. We'll take the oportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
 
 Before we look at the **detached** mode, we should first find out a way to stop the container that you have just launched.
 
 First up, launch another terminal (command window) and execute the following command. If you're using docker-machine you need to run `eval $(docker-machine env <YOUR_DOCKER_MACHINE_NAME>)` in each new terminal otherwise you'll get the error "Cannot connect to the Docker daemon. Is the docker daemon running on this host?".
 ```
-$ docker ps
+$ docker container ps
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
 ```
 
 Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters and first stop the running container and then remove the running container as given below. The example below provides the `CONTAINER ID` on our system, you should use the value that you see in your terminal.
 ```
-$ docker stop a7a0e504ca3e
-$ docker rm   a7a0e504ca3e
+$ docker container stop a7a0e504ca3e
+$ docker container rm   a7a0e504ca3e
 ```
 
 Note: A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
@@ -131,16 +131,16 @@ Note: A cool feature is that you do not need to specify the entire `CONTAINER ID
 Now, let us launch a container in **detached** mode as shown below:
 
 ```
-$ docker run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
+$ docker container run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
 In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
 
-Now you can see the ports by running the `docker port` command.
+Now you can see the ports by running the `docker container port` command.
 
 ```
-$ docker port static-site
+$ docker container port static-site
 443/tcp -> 0.0.0.0:32772
 80/tcp -> 0.0.0.0:32773
 ```
@@ -156,7 +156,7 @@ You can now open [http://192.168.99.100:32773](http://192.168.99.100:32773) (rep
 You can also run a second webserver at the same time, specifying a custom host port mapping to the container's webserver.
 
 ```
-$ docker run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
+$ docker container run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
 ```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
@@ -165,8 +165,8 @@ I'm sure you agree that was super simple. To deploy this on a real server you wo
 Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the containers since you won't be using them anymore.
 
 ```
-$ docker stop static-site static-site-2
-$ docker rm static-site static-site-2
+$ docker container stop static-site static-site-2
+$ docker container rm static-site static-site-2
 ```
 
 <a id="docker-images"></a>
@@ -174,10 +174,10 @@ $ docker rm static-site static-site-2
 
 You've looked at images before but in this section we'll dive deeper into what docker images are and build our own image. And, we'll also use that image to run our application locally. Finally, you'll push some of your images to Docker Hub.
 
-Docker images are the basis of containers. In the previous example, you **pulled** the *seqvence/static-site* image from the registry and asked the docker client to run a container **based** on that image. To see the list of images that are available locally, use the `docker images` command.
+Docker images are the basis of containers. In the previous example, you **pulled** the *seqvence/static-site* image from the registry and asked the docker client to run a container **based** on that image. To see the list of images that are available locally, use the `docker image ls` command.
 
 ```
-$ docker images
+$ docker image ls
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
 seqvence/static-site   latest              92a386b6e686        2 hours ago        190.5 MB
 nginx                  latest              af4b3d7d5401        3 hours ago        190.5 MB
@@ -198,17 +198,17 @@ For simplicity, you can think of an image akin to a git repository - images can 
 For example, you can pull a specific version of `ubuntu` image as follows:
 
 ```
-$ docker pull ubuntu:12.04
+$ docker image pull ubuntu:12.04
 ```
 
 **NOTE**: Do not execute the above command. It is only for your reference.
 
 If you do not specify the version number of the image, then as mentioned the Docker client will default to a version named `latest`.
 
-So for example, the `docker pull` command given below will pull an image named `ubuntu:latest`:
+So for example, the `docker image pull` command given below will pull an image named `ubuntu:latest`:
 
 ```
-$ docker pull ubuntu
+$ docker image pull ubuntu
 ```
 
 To get a new Docker image you can either get it from a registry (such as the docker hub) or create your own. There are tens of thousands of images available on [Docker hub](https://hub.docker.com). You can also search for images directly from the command line using `docker search`.
