@@ -145,7 +145,7 @@ $ docker container port static-site
 80/tcp -> 0.0.0.0:32773
 ```
 
-If you're on Linux, you can open [http://localhost:32773](http://localhost:32773) (replace 32773 with your port for 80/tcp) in your browser. If you're on Windows or a Mac, you need to find the IP of the hostname.
+You can open [http://localhost:32773](http://localhost:32773) (replace 32773 with your port for 80/tcp) in your browser. If you're on Windows or on Mac, you sometimes need to find the IP of the hostname, but localhost should also work.
 
 ```
 $ docker-machine ip default
