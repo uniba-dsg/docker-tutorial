@@ -21,37 +21,37 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
 
         $ cd my-wordpress/
 
-3. Create a `docker-compose.yml` file that will start your `Wordpress` blog and a separate `MySQL` instance with a volume mount for data persistence:
+3. Create a `docker-compose.yml` file that will start your `Wordpress` blog and a separate `MySQL` instance:
 
-        version: '2'
+        version: '3.3'
+
         services:
-          db:
-            image: mysql:5.7
-            volumes:
-              - "./.data/db:/var/lib/mysql"
-            restart: always
-            environment:
-              MYSQL_ROOT_PASSWORD: wordpress
-              MYSQL_DATABASE: wordpress
-              MYSQL_USER: wordpress
-              MYSQL_PASSWORD: wordpress
+            db:
+             image: mysql:5.7
+             volumes:
+               - db_data:/var/lib/mysql
+             restart: always
+             environment:
+               MYSQL_ROOT_PASSWORD: somewordpress
+               MYSQL_DATABASE: wordpress
+               MYSQL_USER: wordpress
+               MYSQL_PASSWORD: wordpress
 
-          wordpress:
-            depends_on:
-              - db
-            image: wordpress:latest
-            links:
-              - db
-            ports:
-              - "8000:80"
-            restart: always
-            environment:
-              WORDPRESS_DB_HOST: db:3306
-              WORDPRESS_DB_PASSWORD: wordpress
+           wordpress:
+             depends_on:
+               - db
+             image: wordpress:latest
+             ports:
+               - "8000:80"
+             restart: always
+             environment:
+               WORDPRESS_DB_HOST: db:3306
+               WORDPRESS_DB_USER: wordpress
+               WORDPRESS_DB_PASSWORD: wordpress
+               WORDPRESS_DB_NAME: wordpress
+        volumes:
+            db_data: {}
 
-    **NOTE**: The folder `./.data/db` will be automatically created in the project directory
-    alongside the `docker-compose.yml` which will persist any updates made by wordpress to the
-    database.
 
 <a id="build"></a>
 ### 3.2 Build the project
@@ -95,3 +95,4 @@ At this point, WordPress should be running on port `8000` of your Docker Host, a
 
 Bam, you got Wordpress running with a database in two separate containers. That was easy, wasn't it?
 At this point, you've completed the tutorial. Now it's time to explore the capabilities of Docker on your on. Have fun!
+Source: [Wordpress on Docker](https://docs.docker.com/compose/wordpress/)
