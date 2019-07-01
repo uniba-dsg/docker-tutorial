@@ -26,7 +26,7 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
         version: '3.3'
 
         services:
-            db:
+           db:
              image: mysql:5.7
              volumes:
                - db_data:/var/lib/mysql
