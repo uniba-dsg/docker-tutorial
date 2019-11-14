@@ -37,10 +37,19 @@ This document contains a series of several sections, each of which explains a pa
     -   [2.2 Docker Images](1_engine.md#docker-images)
     -   [2.3 Our First Image](2_dockerfile.md#our-image)
     -   [2.4 Dockerfile](2_dockerfile.md#dockerfiles)
--   [3. Docker Compose and Wordpress](3_compose.md#compose)
-    -   [3.1 Define the project](3_compose.md#project)
-    -   [3.2 Build the project](3_compose.md#build)
-    -   [3.3 Bring up WordPress in a web browser](3_compose.md#run)
+-   [3. Docker Compose](3_compose.md#compose)
+    -   [3.1 Step 1: Setup](3_compose.md#setup)
+    -   [3.2 Step 2: Create a Dockerfile](3_compose.md#dockerfile)
+    -   [3.3 Step 3: Define services in a Compose file](3_compose.md#composefile)
+    -   [3.4 Step 4: Build and run your app with Compose](3_compose.md#ship)
+    -   [3.5 Step 5: Edit the compose file to add a bind mount](3_compose.md#mount)
+    -   [3.6 Step 6: Rel-build and run the app with Compose](3_compose.md#rebuild)
+    -   [3.7 Step 7: Update the application](3_compose.md#update)
+    -   [3.8 Step 8: Experiment with some other commands](3_compose.md#experiment)
+-   [4. Docker Compose and Wordpress](4_compose.md#compose)
+    -   [4.1 Define the project](4_compose.md#project)
+    -   [4.2 Build the project](4_compose.md#build)
+    -   [4.3 Bring up WordPress in a web browser](4_compose.md#run)
 
 
 <a href="#table-of-contents" class="top" id="preface">Top</a>
