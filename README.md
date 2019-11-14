@@ -43,7 +43,7 @@ This document contains a series of several sections, each of which explains a pa
     -   [3.3 Step 3: Define services in a Compose file](3_compose.md#composefile)
     -   [3.4 Step 4: Build and run your app with Compose](3_compose.md#ship)
     -   [3.5 Step 5: Edit the compose file to add a bind mount](3_compose.md#mount)
-    -   [3.6 Step 6: Rel-build and run the app with Compose](3_compose.md#rebuild)
+    -   [3.6 Step 6: Re-build and run the app with Compose](3_compose.md#rebuild)
     -   [3.7 Step 7: Update the application](3_compose.md#update)
     -   [3.8 Step 8: Experiment with some other commands](3_compose.md#experiment)
 -   [4. Docker Compose and Wordpress](4_compose.md#compose)
