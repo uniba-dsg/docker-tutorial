@@ -235,7 +235,7 @@ If you don't have the `alpine:latest` image, the client will first pull the imag
 The last step in this section is to run the image and see if it actually works.
 
 ```
-$ docker container run -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
+$ docker container run -it --rm -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
