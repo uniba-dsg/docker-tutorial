@@ -31,18 +31,11 @@ app = Flask(__name__)
 
 # list of cat images
 images = [
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr05/15/9/anigif_enhanced-buzz-26388-1381844103-11.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr01/15/9/anigif_enhanced-buzz-31540-1381844535-8.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr05/15/9/anigif_enhanced-buzz-26390-1381844163-18.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr06/15/10/anigif_enhanced-buzz-1376-1381846217-0.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr03/15/9/anigif_enhanced-buzz-3391-1381844336-26.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr06/15/10/anigif_enhanced-buzz-29111-1381845968-0.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr03/15/9/anigif_enhanced-buzz-3409-1381844582-13.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr02/15/9/anigif_enhanced-buzz-19667-1381844937-10.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr05/15/9/anigif_enhanced-buzz-26358-1381845043-13.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr06/15/9/anigif_enhanced-buzz-18774-1381844645-6.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr06/15/9/anigif_enhanced-buzz-25158-1381844793-0.gif",
-    "https://img.buzzfeed.com/buzzfeed-static/static/2013-10/enhanced/webdr03/15/10/anigif_enhanced-buzz-11980-1381846269-1.gif"
+    "https://media2.giphy.com/media/12PA1eI8FBqEBa/giphy.gif",
+    "https://media0.giphy.com/media/C9x8gX02SnMIoAClXa/giphy.gif",
+    "https://media0.giphy.com/media/1iu8uG2cjYFZS6wTxv/giphy.gif",
+    "https://media3.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif",
+    "https://media3.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif"
 ]
 
 @app.route('/')
@@ -57,7 +50,7 @@ if __name__ == "__main__":
 In order to install Python modules required for our app we need to add to **requirements.txt** file the following line:
 
 ```
-Flask==0.10.1
+Flask==1.1.2
 ```
 
 Create a directory called `templates` and create a **index.html** file in that directory, to have the same content as below:
@@ -86,7 +79,7 @@ Create a directory called `templates` and create a **index.html** file in that d
     <div class="container">
       <h4>Cat Gif of the day</h4>
       <img src="{{url}}" />
-      <p><small>Courtesy: <a href="http://www.buzzfeed.com/copyranter/the-best-cat-gif-post-in-the-history-of-cat-gifs">Buzzfeed</a></small></p>
+      <p><small>Courtesy: <a href="https://giphy.com/explore/cat">Giphy</a></small></p>
     </div>
   </body>
 </html>
@@ -129,10 +122,10 @@ The next thing you need to specify is the port number which needs to be exposed.
 EXPOSE 5000
 ```
 
-The last step is the command for running the application which is simply - `python ./app.py`. Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that -
+The last step is the command for running the application which is simply - `python3 ./app.py`. Use the [CMD](https://docs.docker.com/engine/reference/builder/#cmd) command to do that -
 
 ```
-CMD ["python", "/usr/src/app/app.py"]
+CMD ["python3", "/usr/src/app/app.py"]
 ```
 
 The primary purpose of `CMD` is to tell the container which command it should run by default when it is started. With that, our `Dockerfile` is now ready. This is how it looks:
@@ -156,7 +149,7 @@ COPY templates/index.html /usr/src/app/templates/
 EXPOSE 5000
 
 # run the application
-CMD ["python", "/usr/src/app/app.py"]
+CMD ["python3", "/usr/src/app/app.py"]
 ```
 
 Now that you finally have your `Dockerfile`, you can now build your image. The `docker image build` command does the heavy-lifting of creating a docker image from a `Dockerfile`.
@@ -165,68 +158,93 @@ While running the `docker image build` command given below, make sure to replace
 
 ```
 $ docker image build -t <YOUR_USERNAME>/myfirstapp .
-Sending build context to Docker daemon 9.728 kB
-Step 1 : FROM alpine:latest
- ---> 0d81fc72e790
-Step 2 : RUN apk add --update py-pip
- ---> Running in 8abd4091b5f5
-fetch http://dl-4.alpinelinux.org/alpine/v3.3/main/x86_64/APKINDEX.tar.gz
-fetch http://dl-4.alpinelinux.org/alpine/v3.3/community/x86_64/APKINDEX.tar.gz
-(1/12) Installing libbz2 (1.0.6-r4)
-(2/12) Installing expat (2.1.0-r2)
-(3/12) Installing libffi (3.2.1-r2)
-(4/12) Installing gdbm (1.11-r1)
-(5/12) Installing ncurses-terminfo-base (6.0-r6)
-(6/12) Installing ncurses-terminfo (6.0-r6)
-(7/12) Installing ncurses-libs (6.0-r6)
-(8/12) Installing readline (6.3.008-r4)
-(9/12) Installing sqlite-libs (3.9.2-r0)
-(10/12) Installing python (2.7.11-r3)
-(11/12) Installing py-setuptools (18.8-r0)
-(12/12) Installing py-pip (7.1.2-r0)
-Executing busybox-1.24.1-r7.trigger
-OK: 59 MiB in 23 packages
- ---> 976a232ac4ad
-Removing intermediate container 8abd4091b5f5
-Step 3 : COPY requirements.txt /usr/src/app/
- ---> 65b4be05340c
-Removing intermediate container 29ef53b58e0f
-Step 4 : RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
- ---> Running in a1f26ded28e7
-Collecting Flask==0.10.1 (from -r /usr/src/app/requirements.txt (line 1))
-  Downloading Flask-0.10.1.tar.gz (544kB)
-Collecting Werkzeug>=0.7 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))
-  Downloading Werkzeug-0.11.4-py2.py3-none-any.whl (305kB)
-Collecting Jinja2>=2.4 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))
-  Downloading Jinja2-2.8-py2.py3-none-any.whl (263kB)
-Collecting itsdangerous>=0.21 (from Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))
-  Downloading itsdangerous-0.24.tar.gz (46kB)
-Collecting MarkupSafe (from Jinja2>=2.4->Flask==0.10.1->-r /usr/src/app/requirements.txt (line 1))
-  Downloading MarkupSafe-0.23.tar.gz
-Installing collected packages: Werkzeug, MarkupSafe, Jinja2, itsdangerous, Flask
-  Running setup.py install for MarkupSafe
-  Running setup.py install for itsdangerous
-  Running setup.py install for Flask
-Successfully installed Flask-0.10.1 Jinja2-2.8 MarkupSafe-0.23 Werkzeug-0.11.4 itsdangerous-0.24
-You are using pip version 7.1.2, however version 8.1.1 is available.
-You should consider upgrading via the 'pip install --upgrade pip' command.
- ---> 8de73b0730c2
-Removing intermediate container a1f26ded28e7
-Step 5 : COPY app.py /usr/src/app/
- ---> 6a3436fca83e
-Removing intermediate container d51b81a8b698
-Step 6 : COPY templates/index.html /usr/src/app/templates/
- ---> 8098386bee99
-Removing intermediate container b783d7646f83
-Step 7 : EXPOSE 5000
- ---> Running in 31401b7dea40
- ---> 5e9988d87da7
-Removing intermediate container 31401b7dea40
-Step 8 : CMD python /usr/src/app/app.py
- ---> Running in 78e324d26576
- ---> 2f7357a0805d
-Removing intermediate container 78e324d26576
-Successfully built 2f7357a0805d
+Sending build context to Docker daemon  6.656kB
+Step 1/8 : FROM alpine:latest
+latest: Pulling from library/alpine
+df20fa9351a1: Pull complete
+Digest: sha256:185518070891758909c9f839cf4ca393ee977ac378609f700f60a771a2dfe321
+Status: Downloaded newer image for alpine:latest
+ ---> a24bb4013296
+Step 2/8 : RUN apk add --update py-pip
+ ---> Running in a62262f5d681
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/main/x86_64/APKINDEX.tar.gz
+fetch http://dl-cdn.alpinelinux.org/alpine/v3.12/community/x86_64/APKINDEX.tar.gz
+(1/36) Installing libbz2 (1.0.8-r1)
+(2/36) Installing expat (2.2.9-r1)
+(3/36) Installing libffi (3.3-r2)
+(4/36) Installing gdbm (1.13-r1)
+(5/36) Installing xz-libs (5.2.5-r0)
+(6/36) Installing ncurses-terminfo-base (6.2_p20200523-r0)
+(7/36) Installing ncurses-libs (6.2_p20200523-r0)
+(8/36) Installing readline (8.0.4-r0)
+(9/36) Installing sqlite-libs (3.32.1-r0)
+(10/36) Installing python3 (3.8.3-r0)
+(11/36) Installing py3-appdirs (1.4.4-r1)
+(12/36) Installing py3-ordered-set (4.0.1-r0)
+(13/36) Installing py3-parsing (2.4.7-r0)
+(14/36) Installing py3-six (1.15.0-r0)
+(15/36) Installing py3-packaging (20.4-r0)
+(16/36) Installing py3-setuptools (47.0.0-r0)
+(17/36) Installing py3-chardet (3.0.4-r4)
+(18/36) Installing py3-idna (2.9-r0)
+(19/36) Installing py3-certifi (2020.4.5.1-r0)
+(20/36) Installing py3-urllib3 (1.25.9-r0)
+(21/36) Installing py3-requests (2.23.0-r0)
+(22/36) Installing py3-msgpack (1.0.0-r0)
+(23/36) Installing py3-lockfile (0.12.2-r3)
+(24/36) Installing py3-cachecontrol (0.12.6-r0)
+(25/36) Installing py3-colorama (0.4.3-r0)
+(26/36) Installing py3-distlib (0.3.0-r0)
+(27/36) Installing py3-distro (1.5.0-r1)
+(28/36) Installing py3-webencodings (0.5.1-r3)
+(29/36) Installing py3-html5lib (1.0.1-r4)
+(30/36) Installing py3-pytoml (0.1.21-r0)
+(31/36) Installing py3-pep517 (0.8.2-r0)
+(32/36) Installing py3-progress (1.5-r0)
+(33/36) Installing py3-toml (0.10.1-r0)
+(34/36) Installing py3-retrying (1.3.3-r0)
+(35/36) Installing py3-contextlib2 (0.6.0-r0)
+(36/36) Installing py3-pip (20.1.1-r0)
+Executing busybox-1.31.1-r16.trigger
+OK: 65 MiB in 50 packages
+Removing intermediate container a62262f5d681
+ ---> d929a614524c
+Step 3/8 : COPY requirements.txt /usr/src/app/
+ ---> c331941296ff
+Step 4/8 : RUN pip install --no-cache-dir -r /usr/src/app/requirements.txt
+ ---> Running in f7bad223acb9
+Collecting Flask==1.1.2
+  Downloading Flask-1.1.2-py2.py3-none-any.whl (94 kB)
+Collecting itsdangerous>=0.24
+  Downloading itsdangerous-1.1.0-py2.py3-none-any.whl (16 kB)
+Collecting Werkzeug>=0.15
+  Downloading Werkzeug-1.0.1-py2.py3-none-any.whl (298 kB)
+Collecting Jinja2>=2.10.1
+  Downloading Jinja2-2.11.2-py2.py3-none-any.whl (125 kB)
+Collecting click>=5.1
+  Downloading click-7.1.2-py2.py3-none-any.whl (82 kB)
+Collecting MarkupSafe>=0.23
+  Downloading MarkupSafe-1.1.1.tar.gz (19 kB)
+Using legacy setup.py install for MarkupSafe, since package 'wheel' is not installed.
+Installing collected packages: itsdangerous, Werkzeug, MarkupSafe, Jinja2, click, Flask
+    Running setup.py install for MarkupSafe: started
+    Running setup.py install for MarkupSafe: finished with status 'done'
+Successfully installed Flask-1.1.2 Jinja2-2.11.2 MarkupSafe-1.1.1 Werkzeug-1.0.1 click-7.1.2 itsdangerous-1.1.0
+Removing intermediate container f7bad223acb9
+ ---> 9e1edc94ac44
+Step 5/8 : COPY app.py /usr/src/app/
+ ---> 29da3e4ceeab
+Step 6/8 : COPY templates/index.html /usr/src/app/templates/
+ ---> b58b376c08ac
+Step 7/8 : EXPOSE 5000
+ ---> Running in 52fd80c57790
+Removing intermediate container 52fd80c57790
+ ---> f1ffb484e232
+Step 8/8 : CMD ["python3", "/usr/src/app/app.py"]
+ ---> Running in b791acbfbfd1
+Removing intermediate container b791acbfbfd1
+ ---> c581490d4902
+Successfully built c581490d4902
 ```
 > Note, the Alpine Linux CDN has been experiencing some trouble recently. If you encounter an error building this image, there's a workaround as outlined in [issue #104](https://github.com/docker/docker-birthday-3/issues/104). This is also reflected currently in the repo for the [Flask app](https://github.com/docker/docker-birthday-3/tree/master/flask-app)
 
