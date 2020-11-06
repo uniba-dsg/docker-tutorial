@@ -131,33 +131,15 @@ Note: A cool feature is that you do not need to specify the entire `CONTAINER ID
 Now, let us launch a container in **detached** mode as shown below:
 
 ```
-$ docker container run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
+$ docker container run --name static-site -e AUTHOR="Your Name" -d -p 8080:80 seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
+In the above command, `-d` will create a container with the process detached from our terminal, `-p 8080:80` will publish the exposed container port 80 to the 8080 port on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
 
-Now you can see the ports by running the `docker container port` command.
+You can now open [http://127.0.0.1:8080](http://127.0.01:8080) to see your site live! 
+_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
-```
-$ docker container port static-site
-443/tcp -> 0.0.0.0:32772
-80/tcp -> 0.0.0.0:32773
-```
-
-You can open [http://localhost:32773](http://localhost:32773) (replace 32773 with your port for 80/tcp) in your browser. If you're on Windows or on Mac, you sometimes need to find the IP of the hostname, but localhost should also work.
-
-```
-$ docker-machine ip default
-192.168.99.100
-```
-You can now open [http://192.168.99.100:32773](http://192.168.99.100:32773) (replace 32773 with your port for 80/tcp) to see your site live!
-
-You can also run a second webserver at the same time, specifying a custom host port mapping to the container's webserver.
-
-```
-$ docker container run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
-```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
@@ -165,8 +147,8 @@ I'm sure you agree that was super simple. To deploy this on a real server you wo
 Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the containers since you won't be using them anymore.
 
 ```
-$ docker container stop static-site static-site-2
-$ docker container rm static-site static-site-2
+$ docker container stop static-site
+$ docker container rm static-site
 ```
 
 <a id="docker-images"></a>
