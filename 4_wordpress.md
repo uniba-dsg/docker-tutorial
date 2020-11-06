@@ -42,7 +42,7 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
                - db
              image: wordpress:latest
              ports:
-               - "8000:80"
+               - "8080:80"
              restart: always
              environment:
                WORDPRESS_DB_HOST: db:3306
@@ -83,11 +83,12 @@ This pulls the needed images, and starts the wordpress and database containers, 
 <a id="run"></a>
 ### 4.3 Bring up WordPress in a web browser
 
-If you're using [Docker Machine](https://docs.docker.com/machine/), then `docker-machine ip MACHINE_VM` gives you the machine address and you can open `http://MACHINE_VM_IP:8000` in a browser.
+If you're using [Docker Machine](https://docs.docker.com/machine/), then `docker-machine ip MACHINE_VM` gives you the machine address and you can open `http://MACHINE_VM_IP:8080` in a browser.
+_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
-At this point, WordPress should be running on port `8000` of your Docker Host, and you can complete the "famous five-minute installation" as a WordPress administrator.
+At this point, WordPress should be running on port `8080` of your Docker Host, and you can complete the "famous five-minute installation" as a WordPress administrator.
 
-**NOTE**: The Wordpress site will not be immediately available on port `8000` because the containers are still being initialized and may take a couple of minutes before the first load.
+**NOTE**: The Wordpress site will not be immediately available on port `8080` because the containers are still being initialized and may take a couple of minutes before the first load.
 
 ![Choose language for WordPress install](images/wordpress-lang.png)
 
