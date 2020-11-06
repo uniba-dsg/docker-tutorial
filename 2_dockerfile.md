@@ -253,11 +253,12 @@ If you don't have the `alpine:latest` image, the client will first pull the imag
 The last step in this section is to run the image and see if it actually works.
 
 ```
-$ docker container run -it --rm -p 8888:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
+$ docker container run -it --rm -p 8080:5000 --name myfirstapp YOUR_USERNAME/myfirstapp
  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ```
 
-Head over to `http://<DOCKER_HOST-IP-ADDRESS>:8888` and your app should be live. You may need to open up another terminal and determine the container ip address using `docker-machine ip default` or use localhost:port to run the website.
+Head over to `http://<DOCKER_HOST-IP-ADDRESS>:8080` and your app should be live. You may need to open up another terminal and determine the container ip address using `docker-machine ip default` or use localhost:port to run the website.
+_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/catgif.png" title="static">
 
