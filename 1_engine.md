@@ -50,17 +50,17 @@ $ docker container run alpine /bin/sh
 
 Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker container run -it alpine /bin/sh` which will be discussed later on.
 
-Ok, now it's time to see the `docker container ps` command. The `docker container ps` command shows you all containers that are currently running.
+Ok, now it's time to see the `docker container ls` command. The `docker container ls` command shows you all containers that are currently running.
 
 ```
-$ docker container ps
+$ docker container ls
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
-Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
+Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ls -a`
 
 ```
-$ docker container ps -a
+$ docker container ls -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
 305297d7a235        alpine             "uptime"                  5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
@@ -87,7 +87,7 @@ That concludes a whirlwind tour of the `docker container run` command which woul
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
 - *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Created using Docker images and run the actual application. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
+- *Containers* - Created using Docker images and run the actual application. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ls` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. You'll be using this later in this tutorial.
@@ -115,7 +115,7 @@ Before we look at the **detached** mode, we should first find out a way to stop 
 
 First up, launch another terminal (command window) and execute the following command. If you're using docker-machine you need to run `eval $(docker-machine env <YOUR_DOCKER_MACHINE_NAME>)` in each new terminal otherwise you'll get the error "Cannot connect to the Docker daemon. Is the docker daemon running on this host?".
 ```
-$ docker container ps
+$ docker container ls
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
 ```
