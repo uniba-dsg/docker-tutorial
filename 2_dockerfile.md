@@ -50,7 +50,8 @@ if __name__ == "__main__":
 In order to install Python modules required for our app we need to add to **requirements.txt** file the following line:
 
 ```
-Flask==1.1.2
+Flask==1.1.4
+markupsafe==2.0.1
 ```
 
 Create a directory called `templates` and create a **index.html** file in that directory, to have the same content as below:
