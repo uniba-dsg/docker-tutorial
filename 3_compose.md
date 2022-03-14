@@ -191,7 +191,7 @@ redis                   alpine              9d8fa9aa0e5b        3 weeks ago     
 from within your project directory in the second terminal, or by
 hitting CTRL+C in the original terminal where you started the app.
 
-<a id="mount></a>
+<a id="mount"></a>
 ## 3.5 Step 5: Edit the Compose file to add a bind mount
 
 Edit `docker-compose.yml` in your project directory to add a bind mount for the `web` service:
