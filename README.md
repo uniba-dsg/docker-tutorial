@@ -55,8 +55,6 @@ This document contains a series of several sections, each of which explains a pa
 <a href="#table-of-contents" class="top" id="preface">Top</a>
 ## Preface
 
-> Note: This tutorial is based on version **1.10.1** of Docker and up.
-
 <a id="setup"></a>
 ### Setting up your computer
 Getting all the tooling setup on your computer can be a daunting task, but thankfully getting Docker up and running on your favorite OS has become very easy.
