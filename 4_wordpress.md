@@ -13,7 +13,7 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
 
     You can name the directory something easy for you to remember. This directory is the context for your application image. The directory should only contain resources to build that image.
 
-    This project directory will contain a `docker-compose.yaml` file which will be complete in itself for a good starter wordpress project.
+    This project directory will contain a `docker-compose.yml` file which will be complete in itself for a good starter wordpress project.
 
 2. Change directories into your project directory.
 
@@ -23,13 +23,16 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
 
 3. Create a `docker-compose.yml` file that will start your `Wordpress` blog and a separate `MySQL` instance:
 
-        version: '3.3'
-
+        networks:
+           backend:
+           
         services:
            db:
              image: mysql:5.7
              volumes:
                - db_data:/var/lib/mysql
+             networks:
+               - backend
              restart: always
              environment:
                MYSQL_ROOT_PASSWORD: somewordpress
@@ -41,6 +44,8 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
              depends_on:
                - db
              image: wordpress:latest
+             networks:
+               - backend
              ports:
                - "8080:80"
              restart: always
@@ -83,10 +88,9 @@ This pulls the needed images, and starts the wordpress and database containers, 
 <a id="run"></a>
 ### 4.3 Bring up WordPress in a web browser
 
-If you're using [Docker Machine](https://docs.docker.com/machine/), then `docker-machine ip MACHINE_VM` gives you the machine address and you can open `http://MACHINE_VM_IP:8080` in a browser.
-_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
-
 At this point, WordPress should be running on port `8080` of your Docker Host, and you can complete the "famous five-minute installation" as a WordPress administrator.
+
+_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
 **NOTE**: The Wordpress site will not be immediately available on port `8080` because the containers are still being initialized and may take a couple of minutes before the first load.
 
