@@ -96,7 +96,7 @@ services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "8080:5000"
   redis:
     image: "redis:alpine"
 ```
@@ -106,7 +106,7 @@ This Compose file defines two services: `web` and `redis`.
 ### Web service
 
 The `web` service uses an image that's built from the `Dockerfile` in the current directory.
-It then binds the container and the host machine to the exposed port, `5000`. This example service uses the default port for
+It then binds the container and the host machine port `8080` to the exposed port, `5000`. This example service uses the default port for
 the Flask web server, `5000`.
 
 ### Redis service
@@ -144,17 +144,19 @@ redis_1  | 1:M 17 Aug 22:11:10.483 * Ready to accept connections
     Compose pulls a Redis image, builds an image for your code, and starts the
     services you defined. In this case, the code is statically copied into the image at build time.
 
-2.  Enter http://localhost:5000/ in a browser to see the application running.
+2.  Enter http://localhost:8080/ in a browser to see the application running.
 
     If you're using Docker natively on Linux, Docker Desktop for Mac, or Docker Desktop for
     Windows, then the web app should now be listening on port 5000 on your
-    Docker daemon host. Point your web browser to http://localhost:5000 to
+    Docker daemon host. Point your web browser to http://localhost:8080 to
     find the `Hello World` message. If this doesn't resolve, you can also try
-    http://127.0.0.1:5000.
+    http://127.0.0.1:8080.
 
     If you're using Docker Machine on a Mac or Windows, use `docker-machine ip
     MACHINE_VM` to get the IP address of your Docker host. Then, open
-    `http://MACHINE_VM_IP:5000` in a browser.
+    `http://MACHINE_VM_IP:8080` in a browser.
+    
+    _Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
     You should see a message in your browser saying:
 
@@ -189,7 +191,7 @@ redis                   alpine              9d8fa9aa0e5b        3 weeks ago     
 from within your project directory in the second terminal, or by
 hitting CTRL+C in the original terminal where you started the app.
 
-<a id="mount></a>
+<a id="mount"></a>
 ## 3.5 Step 5: Edit the Compose file to add a bind mount
 
 Edit `docker-compose.yml` in your project directory to add a bind mount for the `web` service:
@@ -200,7 +202,7 @@ services:
   web:
     build: .
     ports:
-      - "5000:5000"
+      - "8080:5000"
     volumes:
       - .:/code
     environment:
@@ -267,7 +269,7 @@ $ docker-compose ps
 Name                 Command            State       Ports
 -------------------------------------------------------------------
 composetest_redis_1   /usr/local/bin/run         Up
-composetest_web_1     /bin/sh -c python app.py   Up      5000->5000/tcp
+composetest_web_1     /bin/sh -c python app.py   Up      8080->5000/tcp
 ```
 
 The `docker-compose run` command allows you to run one-off commands for your

@@ -50,17 +50,17 @@ $ docker container run alpine /bin/sh
 
 Wait, nothing happened! Is that a bug? Well, no. These interactive shells will exit after running any scripted commands, unless they are run in an interactive terminal - so for this example to not exit, you need to `docker container run -it alpine /bin/sh` which will be discussed later on.
 
-Ok, now it's time to see the `docker container ps` command. The `docker container ps` command shows you all containers that are currently running.
+Ok, now it's time to see the `docker container ls` command. The `docker container ls` command shows you all containers that are currently running.
 
 ```
-$ docker container ps
+$ docker container ls
 CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
 ```
 
-Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ps -a`
+Since no containers are running, you see a blank line. Let's try a more useful variant: `docker container ls -a`
 
 ```
-$ docker container ps -a
+$ docker container ls -a
 CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
 36171a5da744        alpine              "/bin/sh"                5 minutes ago       Exited (0) 2 minutes ago                        fervent_newton
 305297d7a235        alpine             "uptime"                  5 minutes ago       Exited (0) 4 minutes ago                        distracted_goldstine
@@ -87,7 +87,7 @@ That concludes a whirlwind tour of the `docker container run` command which woul
 In the last section, you saw a lot of Docker-specific jargon which might be confusing to some. So before you go further, let's clarify some terminology that is used frequently in the Docker ecosystem.
 
 - *Images* - The Filesystem and configuration of our application which are used to create containers. To find out more about a Docker image, run `docker image inspect alpine`. In the demo above, you used the `docker image pull` command to download the **alpine** image. When you executed the command `docker container run hello-world`, it also did a `docker image pull` behind the scenes to download the **hello-world** image.
-- *Containers* - Created using Docker images and run the actual application. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ps` command.
+- *Containers* - Created using Docker images and run the actual application. You created a container using `docker container run` which you did using the alpine image that you downloaded. A list of running containers can be seen using the `docker container ls` command.
 - *Docker daemon* - The background service running on the host that manages building, running and distributing Docker containers.
 - *Docker client* - The command line tool that allows the user to interact with the Docker daemon.
 - *Docker Hub* - A [registry](https://hub.docker.com/explore/) of Docker images. You can think of the registry as a directory of all available Docker images. You'll be using this later in this tutorial.
@@ -115,7 +115,7 @@ Before we look at the **detached** mode, we should first find out a way to stop 
 
 First up, launch another terminal (command window) and execute the following command. If you're using docker-machine you need to run `eval $(docker-machine env <YOUR_DOCKER_MACHINE_NAME>)` in each new terminal otherwise you'll get the error "Cannot connect to the Docker daemon. Is the docker daemon running on this host?".
 ```
-$ docker container ps
+$ docker container ls
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
 a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
 ```
@@ -131,33 +131,15 @@ Note: A cool feature is that you do not need to specify the entire `CONTAINER ID
 Now, let us launch a container in **detached** mode as shown below:
 
 ```
-$ docker container run --name static-site -e AUTHOR="Your Name" -d -P seqvence/static-site
+$ docker container run --name static-site -e AUTHOR="Your Name" -d -p 8080:80 seqvence/static-site
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will create a container with the process detached from our terminal, `-P` will publish all the exposed container ports to random ports on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
+In the above command, `-d` will create a container with the process detached from our terminal, `-p 8080:80` will publish the exposed container port 80 to the 8080 port on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
 
-Now you can see the ports by running the `docker container port` command.
+You can now open [http://127.0.0.1:8080](http://127.0.01:8080) to see your site live! 
+_Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
-```
-$ docker container port static-site
-443/tcp -> 0.0.0.0:32772
-80/tcp -> 0.0.0.0:32773
-```
-
-You can open [http://localhost:32773](http://localhost:32773) (replace 32773 with your port for 80/tcp) in your browser. If you're on Windows or on Mac, you sometimes need to find the IP of the hostname, but localhost should also work.
-
-```
-$ docker-machine ip default
-192.168.99.100
-```
-You can now open [http://192.168.99.100:32773](http://192.168.99.100:32773) (replace 32773 with your port for 80/tcp) to see your site live!
-
-You can also run a second webserver at the same time, specifying a custom host port mapping to the container's webserver.
-
-```
-$ docker container run --name static-site-2 -e AUTHOR="Your Name" -d -p 8888:80 seqvence/static-site
-```
 <img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
@@ -165,8 +147,8 @@ I'm sure you agree that was super simple. To deploy this on a real server you wo
 Now that you've seen how to run a webserver inside a docker image, you must be wondering - how do I create my own docker image? This is the question we'll be exploring in the next section. But first, let's stop and remove the containers since you won't be using them anymore.
 
 ```
-$ docker container stop static-site static-site-2
-$ docker container rm static-site static-site-2
+$ docker container stop static-site
+$ docker container rm static-site
 ```
 
 <a id="docker-images"></a>
