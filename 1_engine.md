@@ -113,7 +113,7 @@ In this case, the client didn't tell the Docker Engine to publish any of the por
 
 Before we look at the **detached** mode, we should first find out a way to stop the container that you have just launched.
 
-First up, launch another terminal (command window) and execute the following command. If you're using docker-machine you need to run `eval $(docker-machine env <YOUR_DOCKER_MACHINE_NAME>)` in each new terminal otherwise you'll get the error "Cannot connect to the Docker daemon. Is the docker daemon running on this host?".
+First up, launch another terminal (command window) and execute the following command:
 ```
 $ docker container ls
 CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
