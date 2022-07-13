@@ -293,4 +293,4 @@ container:
 $ docker-compose down --volumes
 ```
 
-At this point, you have seen the basics of how Compose works.
+At this point, you have seen the basics of how Compose works. [Go to next section](4_wordpress.md)
