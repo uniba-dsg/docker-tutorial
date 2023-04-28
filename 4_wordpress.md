@@ -61,11 +61,11 @@ with Docker containers. This quick-start guide demonstrates how to use Compose t
 <a id="build"></a>
 ### 4.2 Build the project
 
-Now, run `docker-compose up -d` from your project directory.
+Now, run `docker compose up -d` from your project directory.
 
 This pulls the needed images, and starts the wordpress and database containers, as shown in the example below.
 
-    $ docker-compose up -d
+    $ docker compose up -d
     Creating network "my_wordpress_default" with the default driver
     Pulling db (mysql:5.7)...
     5.7: Pulling from library/mysql
