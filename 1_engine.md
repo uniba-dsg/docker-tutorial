@@ -101,29 +101,29 @@ Great! So you have now looked at `docker container run`, played with a docker co
 ### 2.1 Static Sites
 Let's start by taking baby-steps. The first thing we're going to look at is how you can run a dead-simple static website. You're going to pull a docker image from the docker hub, run the container and see how easy it so to set up a webserver.
 
-The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Hub as [`seqvence/static-site`](https://hub.docker.com/r/seqvence/static-site/). You can download and run the image directly in one go using `docker container run`.
+The image that you are going to use is a single-page website that was already created for this demo and is available on the Docker Hub as [`traefik/whoami`](https://hub.docker.com/r/traefik/whoami). You can download and run the image directly in one go using `docker container run`.
 
 ```
-$ docker container run seqvence/static-site
+$ docker container run traefik/whoami
 ```
 Since the image doesn't exist on your Docker host, the Docker daemon will first fetch the image from the registry and then run the image.
 Okay, now that the server is running, do you see the website? What port is it running on? And more importantly, how do you access the container directly from our host machine?
 
-In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker container run` command. We'll take the oportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
+In this case, the client didn't tell the Docker Engine to publish any of the ports so you need to re-run the `docker container run` command. We'll take the opportunity to publish ports and pass your name to the container to customize the message displayed. While we are at it, you should also find a way so that our terminal is not attached to the running container. So that you can happily close your terminal and keep the container running. This is called the **detached** mode.
 
 Before we look at the **detached** mode, we should first find out a way to stop the container that you have just launched.
 
 First up, launch another terminal (command window) and execute the following command:
 ```
 $ docker container ls
-CONTAINER ID        IMAGE                  COMMAND                  CREATED             STATUS              PORTS               NAMES
-a7a0e504ca3e        seqvence/static-site   "/bin/sh -c 'cd /usr/"   28 seconds ago      Up 26 seconds       80/tcp, 443/tcp     stupefied_mahavira
+CONTAINER ID     IMAGE              COMMAND         CREATED            STATUS            PORTS          NAMES
+90680ba923e1     traefik/whoami     "/whoami"       14 seconds ago     Up 13 seconds     80/tcp         lucid_burnell
 ```
 
 Check out the `CONTAINER ID` column. You will need to use this `CONTAINER ID` value, a long sequence of characters and first stop the running container and then remove the running container as given below. The example below provides the `CONTAINER ID` on our system, you should use the value that you see in your terminal.
 ```
-$ docker container stop a7a0e504ca3e
-$ docker container rm   a7a0e504ca3e
+$ docker container stop 90680ba923e1
+$ docker container rm   90680ba923e1
 ```
 
 Note: A cool feature is that you do not need to specify the entire `CONTAINER ID`. You can just specify a few starting characters and if it is unique among all the containers that you have launched, the Docker client will intelligently pick it up.
@@ -131,16 +131,16 @@ Note: A cool feature is that you do not need to specify the entire `CONTAINER ID
 Now, let us launch a container in **detached** mode as shown below:
 
 ```
-$ docker container run --name static-site -e AUTHOR="Your Name" -d -p 8080:80 seqvence/static-site
+$ docker container run -d -p 8080:80 --name static-site traefik/whoami
 e61d12292d69556eabe2a44c16cbd54486b2527e2ce4f95438e504afb7b02810
 ```
 
-In the above command, `-d` will create a container with the process detached from our terminal, `-p 8080:80` will publish the exposed container port 80 to the 8080 port on the Docker host, `-e` is how you pass environment variables to the container, and finally `--name` allows you to specify a container name. `AUTHOR` is the environment variable name and `Your Name` is the value that you can pass.
+In the above command, `-d` will create a container with the process detached from our terminal, `-p 8080:80` will publish the exposed container port 80 to the 8080 port on the Docker host, and finally `--name` allows you to specify a container name.
 
-You can now open [http://127.0.0.1:8080](http://127.0.01:8080) to see your site live! 
+You can now open [http://127.0.0.1:8080](http://127.0.01:8080) to see your site live!
 _Hint: In AWS Cloud9 use `Tools -> Preview -> Preview running applications` to open the browser on the appropriate remote address._
 
-<img src="https://raw.githubusercontent.com/docker/Docker-Birthday-3/master/tutorial-images/static.png" title="static">
+![static-site](images/static.png)
 
 I'm sure you agree that was super simple. To deploy this on a real server you would just need to install docker, and run the above docker command.
 
@@ -156,13 +156,13 @@ $ docker container rm static-site
 
 You've looked at images before but in this section we'll dive deeper into what docker images are and build our own image. And, we'll also use that image to run our application locally. Finally, you'll push some of your images to Docker Hub.
 
-Docker images are the basis of containers. In the previous example, you **pulled** the *seqvence/static-site* image from the registry and asked the docker client to run a container **based** on that image. To see the list of images that are available locally, use the `docker image ls` command.
+Docker images are the basis of containers. In the previous example, you **pulled** the *traefik/whoami* image from the registry and asked the docker client to run a container **based** on that image. To see the list of images that are available locally, use the `docker image ls` command.
 
 ```
 $ docker image ls
 REPOSITORY             TAG                 IMAGE ID            CREATED             SIZE
-seqvence/static-site   latest              92a386b6e686        2 hours ago        190.5 MB
-nginx                  latest              af4b3d7d5401        3 hours ago        190.5 MB
+traefik/whoami         latest              9807740ea1ff        9 months ago        6.61MB
+nginx                  latest              af4b3d7d5401        3 hours ago         190.5 MB
 python                 2.7                 1c32174fd534        14 hours ago        676.8 MB
 postgres               9.4                 88d845ac7a88        14 hours ago        263.6 MB
 containous/traefik     latest              27b4e0c6b2fd        4 days ago          20.75 MB
